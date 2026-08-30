@@ -72,12 +72,12 @@ function Hero({ onHire }: { onHire: () => void }) {
   return (
     <section
       id="hero"
-      className="relative flex min-h-dvh scroll-mt-24 items-center justify-center overflow-hidden px-5 pt-24 pb-16"
+      className="relative flex min-h-dvh scroll-mt-24 flex-col items-center overflow-hidden px-5 pt-28 pb-8"
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,color-mix(in_oklab,var(--color-accent)_18%,transparent),transparent_62%)]" />
       <div className="grain" />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center text-center">
+      <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center text-center">
         <img
           src={profile.portrait}
           alt={profile.name}
@@ -110,7 +110,7 @@ function Hero({ onHire }: { onHire: () => void }) {
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2">
+      <div className="relative z-10 mt-10 flex shrink-0 flex-col items-center gap-2">
         <span className="text-xs tracking-[0.22em] text-muted uppercase">Scroll</span>
         <span className="relative h-12 w-0.5 overflow-hidden rounded-full bg-border">
           <span className="scroll-drop absolute inset-x-0 h-1/3 bg-linear-to-b from-transparent to-accent" />
