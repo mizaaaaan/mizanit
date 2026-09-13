@@ -32,7 +32,7 @@ export const profile = {
     { label: "YouTube", href: "https://www.youtube.com/@Mizaaaan" },
     { label: "Facebook", href: "https://www.facebook.com/mizaaaan" },
   ],
-  roles: ["IT Specialist", "Web Developer", "Pharmacist", "Designer"],
+  roles: ["IT Specialist", "Web Developer", "Pharmacist", "Digital Marketer", "Designer"],
   languages: [
     { name: "English", level: 95 },
     { name: "Arabic", level: 82 },
@@ -76,17 +76,24 @@ export const profile = {
     },
     {
       period: "2021 – 2022",
-      title: "Office Aide",
+      title: "Medical Record Assistant",
       org: "Life Line Hospital Pvt.",
       desc: "Assessed, diagnosed, and treated patients; provided care resulting in 98% satisfaction.",
       track: "healthcare" as Track,
     },
     {
-      period: "2022 – 2025",
+      period: "2022 – 2023",
       title: "Owner & Pharmacist",
       org: "Dream Pharmacy",
       desc: "Managed prescriptions, patient consultations, and accurate medication dispensing.",
       track: "pharmacy" as Track,
+    },
+    {
+      period: "2023 – 2025",
+      title: "Web Design & Digital Marketing Specialist",
+      org: "Cube Tech",
+      desc: "Designed responsive websites and implemented digital marketing strategies to increase engagement.",
+      track: "web" as Track,
     },
     {
       period: "2025 – 2026",
