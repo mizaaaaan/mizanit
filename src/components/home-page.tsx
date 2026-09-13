@@ -9,6 +9,7 @@ import {
   HeartPulse,
   Mail,
   MapPin,
+  Megaphone,
   Monitor,
   Palette,
   Phone,
@@ -23,7 +24,7 @@ import { Lightbox } from "@/components/lightbox";
 import { useReveal } from "@/hooks/use-reveal";
 import { cn } from "@/lib/utils";
 
-const serviceIcons = [Wrench, Monitor, Palette, Pill, HeartPulse, Stethoscope];
+const serviceIcons = [Wrench, Monitor, Palette, Megaphone, Pill, HeartPulse, Stethoscope];
 
 function SectionHead({
   eyebrow,
@@ -171,7 +172,7 @@ function Services() {
         eyebrow="Selected work"
         title="What I"
         em="offer"
-        sub="A mix of IT, design, and the operational discipline of clinics and pharmacies."
+        sub="A mix of IT, design, marketing, and the operational discipline of clinics and pharmacies."
         action={
           <Button asChild variant="ghost" className="hidden md:inline-flex">
             <Link to="/resume">

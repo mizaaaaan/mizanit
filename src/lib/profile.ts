@@ -143,6 +143,11 @@ export const profile = {
       track: "web" as Track,
     },
     {
+      title: "Digital Marketing",
+      desc: "Campaigns, content, and search strategy that build reach and bring in enquiries.",
+      track: "web" as Track,
+    },
+    {
       title: "Pharmacy Operations",
       desc: "Prescription accuracy, patient consultation, and running a dispensary end to end.",
       track: "pharmacy" as Track,
