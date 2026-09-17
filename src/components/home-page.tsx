@@ -317,7 +317,7 @@ function Gallery({ onOpen }: { onOpen: (src: string, alt: string) => void }) {
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
         {profile.gallery.map((g, i) => (
           <button
-            key={g.src}
+            key={`${g.src}-${i}`}
             type="button"
             onClick={() => onOpen(g.src, g.alt)}
             className={cn(

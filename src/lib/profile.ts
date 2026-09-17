@@ -164,8 +164,8 @@ export const profile = {
     },
   ],
   gallery: [
-    { src: "/images/IMG_2012.jpg", alt: "Landscape study" },
-    { src: "/images/IMG_0485_Original.jpg", alt: "Visual exploration" },
+    { src: "/images/next-millionaire-website.jpg", alt: "Next Millionaire website I built" },
+    { src: "/images/next-millionaire-website.jpg", alt: "Next Millionaire website — desktop and mobile" },
     { src: "/images/IMG_1864_Original.jpg", alt: "Personal work" },
     { src: "/images/20220410_021706_Original.jpg", alt: "Portrait study" },
     { src: "/images/IMG_2473_Original.jpg", alt: "Candid frame" },
