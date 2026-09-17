@@ -1,1 +1,1 @@
-# https://mizaaaan.mizan962035.workers.dev/
+# https://mizanit.mizan962035.workers.dev/
