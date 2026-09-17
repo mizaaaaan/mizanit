@@ -20,7 +20,6 @@ import {
 import { profile, TRACKS, type Track } from "@/lib/profile";
 import { Button } from "@/components/ui/button";
 import { HireForm } from "@/components/hire-form";
-import { Lightbox } from "@/components/lightbox";
 import { useReveal } from "@/hooks/use-reveal";
 import { cn } from "@/lib/utils";
 
@@ -295,43 +294,82 @@ function Certifications() {
   );
 }
 
-function Gallery({ onOpen }: { onOpen: (src: string, alt: string) => void }) {
+function Websites() {
+  const ref = useReveal<HTMLElement>();
   return (
-    <section id="explorations" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-20 sm:px-8">
+    <section
+      id="explorations"
+      ref={ref}
+      className="reveal mx-auto max-w-6xl scroll-mt-24 px-5 py-20 sm:px-8"
+    >
       <SectionHead
-        eyebrow="Explorations"
+        eyebrow="Website I built"
         title="Visual"
         em="playground"
-        sub="Side projects, frames, and visual notes."
+        sub="Live sites I designed and shipped — marketing sites, tools, and storefronts."
         action={
           <a
-            href="https://www.linkedin.com/in/mizaaaan/"
+            href="https://github.com/mizaaaan?tab=repositories"
             target="_blank"
             rel="noopener noreferrer"
             className="hidden h-10 items-center gap-1 rounded-full border border-border px-4 text-sm text-fg hover:border-accent md:inline-flex"
           >
-            LinkedIn <ArrowUpRight className="size-3.5" />
+            All repositories <ArrowUpRight className="size-3.5" />
           </a>
         }
       />
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-        {profile.gallery.map((g, i) => (
-          <button
-            key={`${g.src}-${i}`}
-            type="button"
-            onClick={() => onOpen(g.src, g.alt)}
-            className={cn(
-              "group overflow-hidden rounded-2xl border border-border bg-surface",
-              i === 0 || i === 5 ? "md:col-span-2 md:row-span-2" : "",
-            )}
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {profile.websites.map((w) => (
+          <a
+            key={w.url}
+            href={w.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-surface transition-colors duration-200 hover:border-accent/50"
           >
-            <img
-              src={g.src}
-              alt={g.alt}
-              loading="lazy"
-              className="aspect-square h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-            />
-          </button>
+            <div className="flex flex-col gap-2 bg-elevated px-4 pt-3 pb-3">
+              <div className="flex items-center gap-2">
+                <span className="flex gap-1.5">
+                  <span className="size-2 rounded-full bg-fg/15" />
+                  <span className="size-2 rounded-full bg-fg/15" />
+                  <span className="size-2 rounded-full bg-fg/15" />
+                </span>
+                <span className="flex-1 truncate rounded-md bg-surface px-2.5 py-1 text-[11px] text-muted">
+                  {w.host}
+                </span>
+                <ArrowUpRight className="size-3.5 text-muted transition-colors group-hover:text-accent-soft" />
+              </div>
+              <div className="overflow-hidden rounded-lg border border-border">
+                <img
+                  src={w.image}
+                  alt={`${w.title} website`}
+                  loading="lazy"
+                  className="aspect-[16/10] w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+                />
+              </div>
+            </div>
+            <div className="flex flex-1 flex-col gap-2.5 p-4">
+              <div>
+                <div className="flex items-center justify-between gap-2">
+                  <h3 className="text-base font-medium text-fg">{w.title}</h3>
+                  <span className="hidden shrink-0 rounded-full border border-border px-2 py-0.5 text-[10px] tracking-[0.12em] text-muted uppercase sm:block">
+                    {w.tag}
+                  </span>
+                </div>
+                <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-muted">{w.desc}</p>
+              </div>
+              <div className="mt-auto flex flex-wrap gap-1.5 pt-1">
+                {w.stack.map((s) => (
+                  <span
+                    key={s}
+                    className="rounded-full bg-elevated px-2.5 py-1 text-[11px] text-accent-soft"
+                  >
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </a>
         ))}
       </div>
     </section>
@@ -449,7 +487,6 @@ function Contact({ onHire }: { onHire: () => void }) {
 
 export function HomePage() {
   const [hireOpen, setHireOpen] = useState(false);
-  const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
   const hash = useRouterState({ select: (s) => s.location.hash });
 
   useEffect(() => {
@@ -467,15 +504,10 @@ export function HomePage() {
       <Experience />
       <Education />
       <Certifications />
-      <Gallery onOpen={(src, alt) => setLightbox({ src, alt })} />
+      <Websites />
       <Stats />
       <Contact onHire={() => setHireOpen(true)} />
       <HireForm open={hireOpen} onOpenChange={setHireOpen} />
-      <Lightbox
-        src={lightbox?.src ?? null}
-        alt={lightbox?.alt}
-        onClose={() => setLightbox(null)}
-      />
     </>
   );
 }
