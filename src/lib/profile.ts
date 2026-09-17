@@ -220,8 +220,8 @@ export const profile = {
     },
     {
       title: "Aljaloui Transport",
-      url: "https://www.aljaloui.com/",
-      host: "www.aljaloui.com",
+      url: "https://aljaloui.mizan962035.workers.dev/",
+      host: "aljaloui.mizan962035.workers.dev",
       tag: "Logistics · Business site",
       desc: "Freight and last-mile delivery site with a live delivery-fare estimator and a book-a-call funnel for shipments across Doha.",
       stack: ["Web design", "Development", "Fare estimator"],
