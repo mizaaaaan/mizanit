@@ -216,7 +216,7 @@ export const profile = {
       tag: "E-commerce · WhatsApp ordering",
       desc: "Online storefront for my pharmacy — browse products, build an order chit, and check out via WhatsApp, phone, or cash on delivery.",
       stack: ["E-commerce", "WhatsApp API", "Front-end"],
-      image: "/images/next-millionaire-website.jpg",
+      image: "/images/dream-pharmacy.jpg",
     },
     {
       title: "Aljaloui Transport",
