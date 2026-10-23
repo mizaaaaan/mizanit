@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   ArrowUpRight,
   Check,
@@ -13,13 +13,27 @@ import { profile, TRACKS, type Track } from "@/lib/profile";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
+function matches(track: Track, filter: Track | "all") {
+  if (filter === "all") return true;
+  if (filter === "it") return track === "it" || track === "web";
+  return track === filter;
+}
+
 export function ResumeStudio() {
   const [filter, setFilter] = useState<Track | "all">("all");
 
-  const matches = (track: Track) => filter === "all" || track === filter;
-  const experience = profile.experience.filter((item) => matches(item.track));
-  const certs = profile.certifications.filter((item) => matches(item.track));
-  const skills = profile.skills.filter((item) => matches(item.track));
+  const experience = useMemo(
+    () => profile.experience.filter((x) => matches(x.track, filter)),
+    [filter],
+  );
+  const certs = useMemo(
+    () => profile.certifications.filter((c) => matches(c.track, filter)),
+    [filter],
+  );
+  const skills = useMemo(
+    () => profile.skills.filter((s) => matches(s.track, filter)),
+    [filter],
+  );
 
   return (
     <div className="mx-auto max-w-5xl px-4 pt-24 pb-16 sm:px-6">
