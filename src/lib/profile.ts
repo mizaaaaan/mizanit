@@ -19,13 +19,13 @@ export const profile = {
     "A decade of hands-on experience spanning IT support, web development, and design — carried from pharmacy operations and patient care into building systems that work.",
   about:
     "Versatile IT Specialist skilled in software, web development, design, and technology solutions. Based in Doha, Qatar, with hands-on experience spanning IT support, patient care, and pharmacy operations.",
-  phone: "+97471945693",
-  phoneDisplay: "+974 7194 5693",
+  phone: "+97450705260",
+  phoneDisplay: "+974 5070 5260",
   email: "mizan321@hotmail.com",
   website: "https://mizanht.netlify.app",
   websiteLabel: "mizanht.netlify.app",
   whatsapp:
-    "https://wa.me/97471945693?text=Hello%20Mizan%2C%20I%20found%20your%20portfolio.",
+    "https://wa.me/97450705260?text=Hello%20Mizan%2C%20I%20found%20your%20portfolio.",
   socials: [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/mizaaaan/" },
     { label: "GitHub", href: "https://github.com/mizaaaan" },

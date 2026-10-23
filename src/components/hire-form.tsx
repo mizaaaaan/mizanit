@@ -65,7 +65,7 @@ export function HireForm({
   const body = composeBody(draft);
   const subject = `${draft.interest} — message for ${profile.shortName}`;
   const mailto = `mailto:${profile.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  const wa = `https://wa.me/97471945693?text=${encodeURIComponent(body)}`;
+  const wa = `https://wa.me/97450705260?text=${encodeURIComponent(body)}`;
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
