@@ -43,29 +43,46 @@ export function HireForm({
   onOpenChange: (v: boolean) => void;
 }) {
   const [draft, setDraft] = useState<Draft>(empty);
+  const [draftLoaded, setDraftLoaded] = useState(false);
 
   useEffect(() => {
-    if (!open) return;
     try {
       const raw = localStorage.getItem(DRAFT_KEY);
-      if (raw) setDraft({ ...empty, ...JSON.parse(raw) });
+      if (raw) {
+        const saved: unknown = JSON.parse(raw);
+        if (saved && typeof saved === "object") {
+          const value = saved as Partial<Draft>;
+          setDraft({
+            name: typeof value.name === "string" ? value.name : empty.name,
+            email: typeof value.email === "string" ? value.email : empty.email,
+            interest: hireInterests.includes(value.interest as HireInterest)
+              ? (value.interest as HireInterest)
+              : empty.interest,
+            message: typeof value.message === "string" ? value.message : empty.message,
+          });
+        }
+      }
     } catch {
       /* ignore */
+    } finally {
+      setDraftLoaded(true);
     }
-  }, [open]);
+  }, []);
 
   useEffect(() => {
+    if (!draftLoaded) return;
     try {
       localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
     } catch {
       /* ignore */
     }
-  }, [draft]);
+  }, [draft, draftLoaded]);
 
   const body = composeBody(draft);
   const subject = `${draft.interest} — message for ${profile.shortName}`;
   const mailto = `mailto:${profile.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  const wa = `https://wa.me/97471945693?text=${encodeURIComponent(body)}`;
+  const whatsappNumber = profile.phone.replace(/\D/g, "");
+  const wa = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(body)}`;
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -81,7 +98,7 @@ export function HireForm({
                 Let's work together
               </Dialog.Title>
               <p className="mt-1 text-sm text-muted">
-                Draft a note — it stays on this device until you send it.
+                Your draft is saved on this device so you can come back to it.
               </p>
             </div>
             <Dialog.Close
@@ -130,6 +147,7 @@ export function HireForm({
                     key={item}
                     type="button"
                     onClick={() => setDraft({ ...draft, interest: item })}
+                    aria-pressed={draft.interest === item}
                     className={cn(
                       "h-9 rounded-full border px-3 text-xs transition-colors",
                       draft.interest === item

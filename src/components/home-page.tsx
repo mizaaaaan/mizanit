@@ -59,12 +59,11 @@ function SectionHead({
 
 function Hero({ onHire }: { onHire: () => void }) {
   const [roleIdx, setRoleIdx] = useState(0);
-  const [tick, setTick] = useState(0);
 
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const id = window.setInterval(() => {
       setRoleIdx((i) => (i + 1) % profile.roles.length);
-      setTick((t) => t + 1);
     }, 2200);
     return () => clearInterval(id);
   }, []);
@@ -91,7 +90,7 @@ function Hero({ onHire }: { onHire: () => void }) {
         </h1>
         <p className="mt-6 text-base text-muted sm:text-lg">
           {/^[aeiou]/i.test(profile.roles[roleIdx] ?? "") ? "An" : "A"}{" "}
-          <span key={tick} className="role-in font-display text-fg italic">
+          <span key={roleIdx} className="role-in font-display text-fg italic">
             {profile.roles[roleIdx]}
           </span>{" "}
           based in {profile.location}.
