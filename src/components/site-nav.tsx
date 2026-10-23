@@ -1,7 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { ArrowUpRight, Moon, Sun } from "lucide-react";
 import { profile } from "@/lib/profile";
-import { useTheme } from "@/lib/theme";
+import { useTheme } from "@/lib/theme-context";
 import { cn } from "@/lib/utils";
 
 const links = [

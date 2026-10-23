@@ -48,19 +48,33 @@ export function HireForm({
     if (!open) return;
     try {
       const raw = localStorage.getItem(DRAFT_KEY);
-      if (raw) setDraft({ ...empty, ...JSON.parse(raw) });
+      if (raw) {
+        const parsed = JSON.parse(raw) as Partial<Draft>;
+        setDraft({
+          ...empty,
+          ...parsed,
+          interest:
+            parsed.interest !== undefined && hireInterests.includes(parsed.interest)
+              ? parsed.interest
+              : empty.interest,
+        });
+      }
     } catch {
       /* ignore */
     }
   }, [open]);
 
+  // Only persist while the dialog is open — saving on every render of the
+  // page would clobber a saved draft with the initial empty state before it
+  // could ever be read.
   useEffect(() => {
+    if (!open) return;
     try {
       localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
     } catch {
       /* ignore */
     }
-  }, [draft]);
+  }, [open, draft]);
 
   const body = composeBody(draft);
   const subject = `${draft.interest} — message for ${profile.shortName}`;

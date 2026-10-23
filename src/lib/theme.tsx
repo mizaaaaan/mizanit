@@ -1,33 +1,16 @@
 import {
-  createContext,
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useState,
   type ReactNode,
 } from "react";
+import { readTheme, ThemeContext, type Theme } from "./theme-context";
 
-type Theme = "dark" | "light";
-
-const ThemeContext = createContext<{
-  theme: Theme;
-  toggle: () => void;
-  setTheme: (t: Theme) => void;
-} | null>(null);
-
-function readTheme(): Theme {
-  if (typeof document === "undefined") return "dark";
-  const current = document.documentElement.dataset.theme;
-  if (current === "light" || current === "dark") return current;
-  return "dark";
-}
-
+// The provider lazy-reads the DOM attribute the inline boot script in
+// __root.tsx already set, so the first paint keeps the visitor's stored
+// or system theme with no flash.
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  // Lazy-init from the DOM so we pick up whatever the inline boot script
-  // already set (localStorage or system preference) on the very first
-  // render, instead of defaulting to "dark" and then flashing to the real
-  // theme a tick later once a mount effect corrects it.
   const [theme, setThemeState] = useState<Theme>(() => readTheme());
 
   useEffect(() => {
@@ -48,10 +31,4 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const value = useMemo(() => ({ theme, toggle, setTheme }), [theme, toggle, setTheme]);
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
-}
-
-export function useTheme() {
-  const ctx = useContext(ThemeContext);
-  if (!ctx) throw new Error("useTheme must be used within ThemeProvider");
-  return ctx;
 }
