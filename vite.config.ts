@@ -24,7 +24,7 @@ export default defineConfig(({ command, isPreview }) => ({
     ...(command === "build" || isPreview
       ? [
           nitro({
-            preset: "vercel",
+            preset: "cloudflare_pages",
           }),
         ]
       : []),
