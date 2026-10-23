@@ -24,7 +24,7 @@ export default defineConfig(({ command, isPreview }) => ({
     ...(command === "build" || isPreview
       ? [
           nitro({
-            preset: "cloudflare_pages",
+            preset: "cloudflare_module",
           }),
         ]
       : []),
