@@ -22,17 +22,41 @@ const empty: Draft = {
 };
 
 function composeBody(d: Draft) {
-  return [
+  const lines = [
     `Hello ${profile.shortName},`,
     "",
     d.message.trim() || "I'd like to talk about working together.",
     "",
     `Interest: ${d.interest}`,
-    d.name ? `From: ${d.name}` : "",
-    d.email ? `Email: ${d.email}` : "",
-  ]
-    .filter(Boolean)
-    .join("\n");
+  ];
+  // Optional lines only — the blank separators above must survive, so we
+  // can't filter the whole array for truthiness.
+  if (d.name) lines.push(`From: ${d.name}`);
+  if (d.email) lines.push(`Email: ${d.email}`);
+  return lines.join("\n");
+}
+
+// +974 5070 5260 → 97450705260 for wa.me
+const whatsappNumber = profile.phone.replace(/[^0-9]/g, "");
+
+function loadDraft(): Draft {
+  if (typeof localStorage === "undefined") return empty;
+  try {
+    const raw = localStorage.getItem(DRAFT_KEY);
+    if (!raw) return empty;
+    const parsed = JSON.parse(raw) as Partial<Draft>;
+    return {
+      name: typeof parsed.name === "string" ? parsed.name : empty.name,
+      email: typeof parsed.email === "string" ? parsed.email : empty.email,
+      message: typeof parsed.message === "string" ? parsed.message : empty.message,
+      interest:
+        parsed.interest !== undefined && hireInterests.includes(parsed.interest)
+          ? parsed.interest
+          : empty.interest,
+    };
+  } catch {
+    return empty;
+  }
 }
 
 export function HireForm({
@@ -42,44 +66,23 @@ export function HireForm({
   open: boolean;
   onOpenChange: (v: boolean) => void;
 }) {
-  const [draft, setDraft] = useState<Draft>(empty);
+  // The saved draft is read once, lazily, as the initial state (guarded for
+  // SSR) and persisted on every change. The initial state *is* the stored
+  // draft, so nothing can clobber it before it has been read.
+  const [draft, setDraft] = useState<Draft>(loadDraft);
 
   useEffect(() => {
-    if (!open) return;
-    try {
-      const raw = localStorage.getItem(DRAFT_KEY);
-      if (raw) {
-        const parsed = JSON.parse(raw) as Partial<Draft>;
-        setDraft({
-          ...empty,
-          ...parsed,
-          interest:
-            parsed.interest !== undefined && hireInterests.includes(parsed.interest)
-              ? parsed.interest
-              : empty.interest,
-        });
-      }
-    } catch {
-      /* ignore */
-    }
-  }, [open]);
-
-  // Only persist while the dialog is open — saving on every render of the
-  // page would clobber a saved draft with the initial empty state before it
-  // could ever be read.
-  useEffect(() => {
-    if (!open) return;
     try {
       localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
     } catch {
       /* ignore */
     }
-  }, [open, draft]);
+  }, [draft]);
 
   const body = composeBody(draft);
   const subject = `${draft.interest} — message for ${profile.shortName}`;
   const mailto = `mailto:${profile.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  const wa = `https://wa.me/97450705260?text=${encodeURIComponent(body)}`;
+  const wa = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(body)}`;
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>

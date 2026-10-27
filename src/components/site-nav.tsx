@@ -48,7 +48,6 @@ export function SiteNav() {
               key={l.label}
               to={l.to}
               hash={l.hash}
-              activeOptions={{ exact: true, includeHash: true }}
               className={cn(
                 "inline-flex h-9 items-center rounded-full px-2 text-sm text-muted transition-colors duration-150 hover:text-fg sm:px-3",
                 l.label === "Hire" && "hidden sm:inline-flex",

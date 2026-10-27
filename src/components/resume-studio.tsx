@@ -14,9 +14,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 function matches(track: Track, filter: Track | "all") {
-  if (filter === "all") return true;
-  if (filter === "it") return track === "it" || track === "web";
-  return track === filter;
+  return filter === "all" || track === filter;
 }
 
 export function ResumeStudio() {

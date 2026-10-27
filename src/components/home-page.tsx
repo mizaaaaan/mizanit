@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import {
   ArrowUpRight,
   Briefcase,
@@ -485,14 +485,10 @@ function Contact({ onHire }: { onHire: () => void }) {
 
 export function HomePage() {
   const [hireOpen, setHireOpen] = useState(false);
-  const hash = useRouterState({ select: (s) => s.location.hash });
 
-  useEffect(() => {
-    if (!hash) return;
-    const id = hash.replace(/^#/, "");
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, [hash]);
+  // Hash scrolling (#work, #contact, …) is handled by the router itself
+  // (defaultHashScrollIntoView in router.tsx) — a second, competing
+  // scrollIntoView here raced it and made anchor jumps jump instead of glide.
 
   return (
     <>
