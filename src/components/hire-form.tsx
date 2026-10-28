@@ -40,8 +40,8 @@ function composeBody(d: Draft) {
 const whatsappNumber = profile.phone.replace(/[^0-9]/g, "");
 
 function loadDraft(): Draft {
-  if (typeof localStorage === "undefined") return empty;
   try {
+    if (typeof localStorage === "undefined") return empty;
     const raw = localStorage.getItem(DRAFT_KEY);
     if (!raw) return empty;
     const parsed = JSON.parse(raw) as Partial<Draft>;
